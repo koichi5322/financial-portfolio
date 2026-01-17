@@ -10,9 +10,9 @@ const Header = () => {
   return (
     <header>
       <div className="main-container inner">
-        <Link href="" className="">
+        <Link href="/" className="">
           <div className="flex items-center gap-3">
-            <Image src={"logo.svg"} width={40} height={40} alt="Dog Coin" />
+            <Image src={"/logo.svg"} width={40} height={40} alt="Dog Coin" />
             <span className="font-bold text-lg">Dog Coin</span>
           </div>
         </Link>
