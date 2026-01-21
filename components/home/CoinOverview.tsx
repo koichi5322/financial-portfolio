@@ -4,9 +4,20 @@ import Image from "next/image";
 import React from "react";
 
 const CoinOverview = async () => {
-  const coin = await fetcher<CoinDetailsData>("/coins/bitcoin", {
-    dex_pair_format: "symbol",
-  });
+  let coin: CoinDetailsData;
+  try {
+    coin = await fetcher<CoinDetailsData>("/coins/bitcoin", {
+      dex_pair_format: "symbol",
+    });
+  } catch (e) {
+    const message = e instanceof Error ? e.message : String(e);
+    return (
+      <div>
+        <span className="text-red-500">エラーが発生しました。</span>
+        <div>{message}</div>
+      </div>
+    );
+  }
   return (
     <div id="coin-overview">
       <div className="header pt-2">

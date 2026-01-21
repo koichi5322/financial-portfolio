@@ -7,11 +7,22 @@ import { TrendingDown, TrendingUp } from "lucide-react";
 import { cn, formatCurrency, formatPercent } from "@/lib/utils";
 
 const TrendingCoins = async () => {
-  const trendhingCoins = await fetcher<{ coins: TrendingCoin[] }>(
-    "/search/trending",
-    undefined,
-    300,
-  );
+  let trendingCoins: { coins: TrendingCoin[] } = { coins: [] };
+  try {
+    trendingCoins = await fetcher<{ coins: TrendingCoin[] }>(
+      "/search/trending",
+      undefined,
+      300,
+    );
+  } catch (e) {
+    const message = e instanceof Error ? e.message : String(e);
+    return (
+      <div>
+        <span className="text-red-500">エラーが発生しました。</span>
+        <div>{message}</div>
+      </div>
+    );
+  }
   const columns: DataTableColumn<TrendingCoin>[] = [
     {
       header: "Name",
@@ -71,7 +82,7 @@ const TrendingCoins = async () => {
     <div id="trending-coins">
       <h4>Trending Coins</h4>
       <DataTable
-        data={trendhingCoins.coins.slice(0, 6) || []}
+        data={trendingCoins.coins.slice(0, 6) || []}
         columns={columns}
         rowKey={(coin) => coin.item.id}
       />
