@@ -29,7 +29,7 @@ const CoinOverview = async () => {
     );
   }
   return (
-    // TODO: fix inteval , now is dummy
+    // TODO: Pass dummy props to avoid errors. Remove after implementing live data fetching.
     <div id="coin-overview">
       <CandlestickChart
         data={coinOHLCData}
