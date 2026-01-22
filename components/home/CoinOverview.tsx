@@ -2,13 +2,23 @@ import { fetcher } from "@/lib/coingecko.actions";
 import { formatCurrency } from "@/lib/utils";
 import Image from "next/image";
 import React from "react";
+import CandlestickChart from "./CandlestickChart";
 
 const CoinOverview = async () => {
   let coin: CoinDetailsData;
+  let coinOHLCData: OHLCData[];
   try {
-    coin = await fetcher<CoinDetailsData>("/coins/bitcoin", {
-      dex_pair_format: "symbol",
-    });
+    [coin, coinOHLCData] = await Promise.all([
+      fetcher<CoinDetailsData>("/coins/bitcoin", {
+        dex_pair_format: "symbol",
+      }),
+      fetcher<OHLCData[]>("/coins/bitcoin/ohlc", {
+        vs_currency: "usd",
+        days: 1,
+
+        precision: "full",
+      }),
+    ]);
   } catch (e) {
     const message = e instanceof Error ? e.message : String(e);
     return (
@@ -19,16 +29,29 @@ const CoinOverview = async () => {
     );
   }
   return (
+    // TODO: Pass dummy props to avoid errors. Remove after implementing live data fetching.
     <div id="coin-overview">
-      <div className="header pt-2">
-        <Image src={coin.image.large} alt={coin.name} width={56} height={56} />
-        <div className="info">
-          <p>
-            {coin.name} / {coin.symbol.toUpperCase()}
-          </p>
-          <h1>{formatCurrency(coin.market_data.current_price.usd)}</h1>
+      <CandlestickChart
+        data={coinOHLCData}
+        coinId="bitcoin"
+        liveInterval="1s"
+        setLiveInterval={(interval: "1s" | "1m") => void {}}
+      >
+        <div className="header pt-2">
+          <Image
+            src={coin.image.large}
+            alt={coin.name}
+            width={56}
+            height={56}
+          />
+          <div className="info">
+            <p>
+              {coin.name} / {coin.symbol.toUpperCase()}
+            </p>
+            <h1>{formatCurrency(coin.market_data.current_price.usd)}</h1>
+          </div>
         </div>
-      </div>
+      </CandlestickChart>
     </div>
   );
 };

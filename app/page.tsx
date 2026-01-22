@@ -1,13 +1,8 @@
-import DataTable from "@/components/DataTable";
 import CoinOverviewSkeleton from "@/components/fallback/CoinOverviewSkeleton";
 import TrendingCoinOverview from "@/components/fallback/TrendingCoinOverview";
 import CoinOverview from "@/components/home/CoinOverview";
 import TrendingCoins from "@/components/home/TrendingCoins";
-import { fetcher } from "@/lib/coingecko.actions";
-import { cn, formatCurrency } from "@/lib/utils";
-import { TrendingDown, TrendingUp } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
+
 import { Suspense } from "react";
 
 export default async function Home() {
