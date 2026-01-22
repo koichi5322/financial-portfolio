@@ -29,8 +29,14 @@ const CoinOverview = async () => {
     );
   }
   return (
+    // TODO: fix inteval , now is dummy
     <div id="coin-overview">
-      <CandlestickChart data={coinOHLCData} coinId="bitcoin">
+      <CandlestickChart
+        data={coinOHLCData}
+        coinId="bitcoin"
+        liveInterval="1s"
+        setLiveInterval={(interval: "1s" | "1m") => void {}}
+      >
         <div className="header pt-2">
           <Image
             src={coin.image.large}
