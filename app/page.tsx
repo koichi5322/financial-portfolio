@@ -1,5 +1,7 @@
+import CategoriesSkeleton from "@/components/fallback/CategoriesSkeleton";
 import CoinOverviewSkeleton from "@/components/fallback/CoinOverviewSkeleton";
 import TrendingCoinOverview from "@/components/fallback/TrendingCoinOverview";
+import Categories from "@/components/home/Categories";
 import CoinOverview from "@/components/home/CoinOverview";
 import TrendingCoins from "@/components/home/TrendingCoins";
 
@@ -17,7 +19,9 @@ export default async function Home() {
         </Suspense>
       </section>
       <section className="w-full mt-7 space-y-4">
-        <p>Categories</p>
+        <Suspense fallback={<CategoriesSkeleton />}>
+          <Categories />
+        </Suspense>
       </section>
     </main>
   );
