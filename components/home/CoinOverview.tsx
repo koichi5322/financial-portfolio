@@ -31,12 +31,7 @@ const CoinOverview = async () => {
   return (
     // TODO: Pass dummy props to avoid errors. Remove after implementing live data fetching.
     <div id="coin-overview">
-      <CandlestickChart
-        data={coinOHLCData}
-        coinId="bitcoin"
-        liveInterval="1s"
-        setLiveInterval={(interval: "1s" | "1m") => void {}}
-      >
+      <CandlestickChart data={coinOHLCData} coinId="bitcoin" liveInterval="1s">
         <div className="header pt-2">
           <Image
             src={coin.image.large}
